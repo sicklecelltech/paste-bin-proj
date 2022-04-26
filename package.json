@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/server.js",
     "start:local": "LOCAL=true ts-node server.ts",
-    "start:heroku": "LOCAL=false ts-node server.ts",
+    "start:heroku": "ts-node server.ts",
     "postinstall": "tsc"
   },
   "author": "your name here",
