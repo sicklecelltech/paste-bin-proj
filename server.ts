@@ -27,10 +27,20 @@ const client = new Client(dbConfig);
 client.connect();
 
 app.get("/", async (req, res) => {
-  const dbres = await client.query('select * from test');
+  res.send("go to endpoint /pastes");
+});
+
+app.get("/pastes", async (req, res) => {
+  const dbres = await client.query('select * from pastebins');
   res.json(dbres.rows);
 });
 
+app.post("/pastes", async (req, res) => {
+  let text = "insert into pastebins(title, text_body) values ($1, $2) "
+  let values = req.body //=  ["test1", "this is a test to see if it works"]
+  const dbres = await client.query(text, values);
+  res.json(dbres.rows);
+});
 
 //Start the server on the given port
 const port = process.env.PORT;
