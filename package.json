@@ -6,7 +6,7 @@
   "scripts": {
     "format": "prettier --write server.ts",
     "format:check": "prettier --check server.ts",
-    "lint": "eslint server.ts",
+    "lint": "eslint",
     "type-check": "tsc --noEmit",
     "start": "node dist/server.js",
     "start:local": "LOCAL=true ts-node server.ts",
