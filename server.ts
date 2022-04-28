@@ -48,20 +48,10 @@ app.get("/pastes", async (req, res) => {
   getResults().then((results) => res.json(results));
 });
 
-/*app.get("/pastes", async (req, res) => {
-  const queries = [{query: "select * from pastebins"}, {query: "select * from paste_summary"}]
-  const sql = pgp.helpers.concat(queries);
-  const dbres = await client.multi(sql)
-  //const dbres = await client.query('select * from pastebins; select * from paste_summary');
-  //const dbres2 = await client.query('select * from paste_summary');
-  res.json(dbres.rows);
-  //res.json(dbres2.rows);
-});*/
-
 app.post("/pastes", async (req, res) => {
   let text = "insert into pastebins(title, text_body) values ($1, $2) ";
-  let values = req.body; //=  ["test1", "this is a test to see if it works"]
-  const dbres = await client.query(text, values);
+  let values = req.body;
+  const dbres = await client.query(text, [values.title, values.text_body]); // values has to be an array
   res.json(dbres.rows);
 });
 
