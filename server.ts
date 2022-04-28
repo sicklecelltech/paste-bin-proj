@@ -48,11 +48,21 @@ app.get("/pastes", async (req, res) => {
   getResults().then((results) => res.json(results));
 });
 
+
+
 app.post("/pastes", async (req, res) => {
-  let text = "insert into pastebins(title, text_body) values ($1, $2) ";
+  let createPastebin =
+    "insert into pastebins(title, text_body) values ($1, $2) ";
   let values = req.body;
-  const dbres = await client.query(text, [values.title, values.text_body]); // values has to be an array
+  const createSummary =
+    "insert into paste_summary (summary_id, summary) values ((select id from pastebins order by id desc limit 1), (substring(( select text_body from pastebins order by id desc limit 1), 1, 280)) )";
+  const dbres = await client.query(createPastebin, [
+    values.title,
+    values.text_body,
+  ]); // values has to be an array
+  const query2 = await client.query(createSummary);
   res.json(dbres.rows);
+  console.log(dbres.rows)
 });
 
 //Start the server on the given port
