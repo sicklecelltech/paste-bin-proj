@@ -48,12 +48,12 @@ app.get("/pastes", async (req, res) => {
   getResults().then((results) => res.json(results));
 });
 
-app.get("/summaries", async (req, res)=> {
-  const summary_result = await client.query("select paste_summary.summary_id, pastebins.title ,paste_summary.summary from paste_summary join pastebins on paste_summary.summary_id=pastebins.id order by pastebins.sumbit_date desc limit 10");
-  res.json(summary_result.rows)
-})
-
-
+app.get("/summaries", async (req, res) => {
+  const summary_result = await client.query(
+    "select paste_summary.summary_id, pastebins.title ,paste_summary.summary from paste_summary join pastebins on paste_summary.summary_id=pastebins.id order by pastebins.sumbit_date desc limit 10"
+  );
+  res.json(summary_result.rows);
+});
 
 app.post("/pastes", async (req, res) => {
   let createPastebin =
@@ -67,7 +67,7 @@ app.post("/pastes", async (req, res) => {
   ]); // values has to be an array
   const query2 = await client.query(createSummary);
   res.json(dbres.rows);
-  console.log(dbres.rows)
+  console.log(dbres.rows);
 });
 
 //Start the server on the given port
